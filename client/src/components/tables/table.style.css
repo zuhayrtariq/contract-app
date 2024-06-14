@@ -1,0 +1,45 @@
+/* set the background color of many elements across the grid */
+.ag-theme-quartz {
+
+    --ag-header-background-color:oklch(var(--p));
+    --ag-header-foreground-color:oklch(var(--pc));
+    --ag-background-color: oklch(var(--b1));
+    --ag-foreground-color: oklch(var(--bc));
+    --ag-data-color: oklch(var(--bc));
+    --ag-header-height: 40px;
+    --ag-row-hover-color: oklch(var(--b3));
+    --ag-active-color: transparent;
+    --ag-header-cell-moving-background-color:transparent;
+    /* --ag-font-family: 'arial'; */
+    /* --ag-font-size: 12px; */
+
+}
+  .ag-center-header .ag-header-cell-label {
+            justify-content: center;
+        }
+.ag-header-cell{
+    @apply font-bold text-sm 
+}
+.ag-floating-filter-input{
+    @apply text-base-content font-normal
+}
+
+.expired{
+    --ag-row-hover-color: oklch(var(--er));
+    @apply bg-error font-semibold text-error-content
+}
+.expired:hover{
+    @apply brightness-90
+}
+
+.expiring-soon{
+    --ag-row-hover-color: oklch(var(--wa));
+    @apply bg-warning font-semibold text-warning-content
+}
+.expiring-soon:hover{
+    @apply brightness-90
+}
+/* .ag-cell-wrap-text {
+    word-break: break-word;
+} */
+
