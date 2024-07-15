@@ -8,7 +8,7 @@ const coffEmailReport = async() =>{
     const data = await getCoffsExpiring();
    
     if(!data?.length )
-    { 
+    {  
       console.log("No Call-off Expiring") 
       return 0;}
     const sectionData = await getSectionDetails();

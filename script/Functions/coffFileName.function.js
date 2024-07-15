@@ -7,7 +7,7 @@ const getDetails = async(sectionCode = 'PNI') =>{
 
 
 const getAllFilesInFolder = async(sectionCode = 'PNI') =>{
-    return fs.readdirSync(`../Call-offs/${sectionCode}`, {withFileTypes: true})
+    return fs.readdirSync(`http://10.159.97.35:8080/Call-offs/${sectionCode}`, {withFileTypes: true})
 .filter(item => !item.isDirectory())
 .map(item => item.name)
 }

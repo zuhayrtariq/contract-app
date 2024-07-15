@@ -6,6 +6,7 @@ import { ModalDataContext } from '../../context/ModalDataContext'
 import { useGetRequisitionQuery } from '../../store/store'
 import { requisitionApi } from '../../store/apis/requisitionApi'
 import { Link } from 'react-router-dom'
+import { copyText } from '../../hooks/copyText.hook'
 
 const ContractPageModal = () => {
   
@@ -28,10 +29,10 @@ const ContractPageModal = () => {
     <div className="flex  justify-between  items-center mb-4">
    
         <div className="join  flex items-center justify-center  font-bold  text-center">
-          <div className="p-2 bg-primary text-primary-content w-[150px] join-item">
+          <div className="p-2 bg-primary text-primary-content w-[150px] join-item" >
             Contract No.
           </div>
-          <div className="p-2 join-item bg-base-300 w-[150px]">{data.contractNo} </div>
+          <div className="p-2 join-item bg-base-300 w-[150px] cursor-copy hover:underline" onClick={()=>copyText(data.contractNo)}>{data.contractNo} </div>
           <Link to={import.meta.env.VITE_FILES_URL + `/Contracts/${data.sectionCode}/Contract ${data.contractNo}/`} target="_blank" className="py-2 bg-accent text-accent-content join-item  px-1 cursor-pointer hover:underline"
           
           >Open</Link>
@@ -46,7 +47,7 @@ const ContractPageModal = () => {
           <div className="p-2 bg-primary text-primary-content w-[150px] join-item">
             Requisition No.
           </div>
-          <div className="p-2 join-item bg-base-300 w-[120px]">{data.reqNo || 'N/A'}</div>
+          <div className="p-2 join-item bg-base-300 w-[120px] cursor-copy hover:underline" onClick={()=>copyText(data.reqNo)} >{data.reqNo || 'N/A'}</div>
         </div>
       
       </div>

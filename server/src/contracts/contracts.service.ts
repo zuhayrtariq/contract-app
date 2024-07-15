@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Contract } from './contract.entity';
 import { Brackets, Repository } from 'typeorm';
 import { UpdateContractDto } from './dtos/update-contract.dto';
-import { CallOff } from 'src/call-offs/call-off.entity';
 import * as moment from 'moment';
 import { SectionsService } from 'src/sections/sections.service';
 import { GetContractDto } from './dtos/get-contract.dto';
@@ -189,7 +188,14 @@ export class ContractsService {
     const contract = await this.getOne(contractNo);
     if (!contract)
       throw new NotFoundException(`Contract Not Found : ${contractNo}`);
+    if(updateContractDto.reqNo == 0)
+    {
+      updateContractDto.reqNo = null
+    }
     Object.assign(contract, updateContractDto);
+    console.log(updateContractDto)
+
+    // console.log(contract)
     return this.contractRepo.save(contract);
   }
   async deleteContract(contractNo: number) {

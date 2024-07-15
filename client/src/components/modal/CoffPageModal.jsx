@@ -6,6 +6,7 @@ import { ModalDataContext } from '../../context/ModalDataContext'
 import { useGetRequisitionQuery } from '../../store/store'
 import { requisitionApi } from '../../store/apis/requisitionApi'
 import { Link } from 'react-router-dom'
+import { copyText } from '../../hooks/copyText.hook'
 
 const CoffPageModal = () => {
   
@@ -33,7 +34,9 @@ const CoffPageModal = () => {
           <div className="p-2 bg-primary text-primary-content w-[150px] join-item">
             Call-off No.
           </div>
-          <div className="p-2 join-item bg-base-300 w-[150px]">{data.coffNo}</div>
+          <div className="p-2 join-item bg-base-300 w-[150px] cursor-copy hover:underline"
+          onClick={()=>copyText(data.coffNo)}
+            >{data.coffNo}</div>
           {
            data.coffFileName &&
            <Link to={import.meta.env.VITE_FILES_URL + `/Call-offs/${data.contract.sectionCode}/${data.coffFileName}`} target="_blank" className="py-2 bg-accent text-accent-content join-item  px-1 cursor-pointer hover:underline"
@@ -52,7 +55,7 @@ const CoffPageModal = () => {
           <div className="p-2 bg-primary text-primary-content w-[150px] join-item">
             Contract No.
           </div>
-          <div className="p-2 join-item bg-base-300 w-[120px]">{data.contractNo || 'N/A'}</div>
+          <div className="p-2 join-item bg-base-300 w-[120px] cursor-copy hover:underline" onClick={()=>copyText(data.contractNo)} >{data.contractNo || 'N/A'}</div>
         </div>
       
       </div>

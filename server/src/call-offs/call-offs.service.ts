@@ -112,7 +112,12 @@ export class CallOffsService {
 
   }
 
-  async deleteCallOff(coffNo: number) {}
+  async deleteCallOff(coffNo: number) {
+    const coff = this.getOne(coffNo);
+    if(!coff)
+      throw new NotFoundException(`Call-off Does Not Exist : ${coffNo}`);
+    return this.coffRepo.delete(coffNo)
+  }
 
   async getCallOffByValidity(sectionCode?: string) {
     const callOffsExpiring = this.coffRepo.createQueryBuilder('callOff');
@@ -130,7 +135,7 @@ export class CallOffsService {
     callOffsExpiring.where('callOff.endDate <= :expiringSoonDate', {
       expiringSoonDate,
     });
-
+    callOffsExpiring.andWhere('callOff.endDate > :todayDate', { todayDate });
     callOffsExpired.where('callOff.endDate <= :todayDate', { todayDate });
 
     callOffsActive.where('callOff.endDate > :expiringSoonDate', {
@@ -138,7 +143,7 @@ export class CallOffsService {
     });
     callOffsExpiring.andWhere('callOff.archived = 0');
     callOffsActive.andWhere('callOff.archived = 0');
-    callOffsExpiring.andWhere('callOff.archived = 0');
+    callOffsExpired.andWhere('callOff.archived = 0');
     if (sectionCode) {
      
       callOffsActive.andWhere('contract.sectionCode = :sectionCode', {
@@ -197,7 +202,8 @@ export class CallOffsService {
     callOffsExpiring.where('callOff.sesEndDate <= :expiringSoonDate', {
       expiringSoonDate,
     });
-
+    callOffsExpiring.andWhere('callOff.sesEndDate > :todayDate', { todayDate });
+   
     callOffsExpired.where('callOff.sesEndDate <= :todayDate', { todayDate });
 
     callOffsActive.where('callOff.sesEndDate > :expiringSoonDate', {
@@ -205,7 +211,7 @@ export class CallOffsService {
     });
     callOffsExpiring.andWhere('callOff.archived = 0');
     callOffsActive.andWhere('callOff.archived = 0');
-    callOffsExpiring.andWhere('callOff.archived = 0');
+    callOffsExpired.andWhere('callOff.archived = 0');
     if (sectionCode) {
      
       callOffsActive.andWhere('contract.sectionCode = :sectionCode', {

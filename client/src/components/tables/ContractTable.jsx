@@ -99,7 +99,7 @@ defaultColDef: {
   const toggleColumn = (columnName,value) =>{
     gridColumnApi.setColumnVisible(columnName,value)
   }
-  const headerToggle =  <div className='flex mb-4 gap-x-4'>
+  const headerToggle =  <div className='flex mt-2 gap-x-4 justify-center h-[30px]'>
   <div className='flex items-center justify-center gap-x-2'>
    <input type="checkbox" id='sectionCode' name='sectionCode' onChange={(e)=>{toggleColumn(e.target.name,e.target.checked)}} defaultChecked className="checkbox checkbox-sm checkbox-primary" />
    <label htmlFor="sectionCode">Section</label>
@@ -227,9 +227,9 @@ defaultColDef: {
 
       </div>
       
-
+    {headerToggle}
     <div
-    className="ag-theme-quartz w-full h-[calc(100%-48px)] " // applying the grid theme
+    className="ag-theme-quartz w-full h-[calc(100%-78px)] " // applying the grid theme
      // the grid will fill the size of the parent container
    >
       

@@ -62,9 +62,8 @@ if (process.env.emailAlerts == 'on') {
    
   })
 }
-cron.schedule('0 9-18 * * *', () => {
+cron.schedule('*/5 9-18 * * *', () => {
   console.log('Checking Coff File : ',new Date().toLocaleString());
   coffFileFunction();
  
 });
-// coffFileFunction();

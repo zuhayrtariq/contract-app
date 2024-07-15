@@ -22,8 +22,9 @@ import { useLocation } from "react-router-dom";
 import ContractNoCell from "../cells/ContractNoCell";
 
 const CoffTable = () => {
+  const [gridApi, setGridApi] = useState(null)
+  const [gridColumnApi, setGridColumnApi] = useState(null)
   const [searchFilter, setSearchFilter] = useState("");
-  const [showColumn, setShowColumn] = useState(false);
   const [searchSection, setSearchSection] = useState(
     localStorage.getItem("coffSearchSection") || undefined
   );
@@ -36,13 +37,15 @@ const CoffTable = () => {
     archived: getArchived,
     sectionCode: searchSection,
   });
-
   const handleSearchSectionChange = (value) => {
     setSearchSection(value);
     if (value == undefined) localStorage.removeItem("coffSearchSection");
     else localStorage.setItem("coffSearchSection", value);
   };
-
+  function onGridReady(params){
+    setGridApi(params.api);
+    setGridColumnApi(params.api)
+  } 
   const [colDefs, setColDefs] = useState([
     {
       headerName: "#",
@@ -106,7 +109,14 @@ const CoffTable = () => {
       },
     },
     {
-      headerName: "SES Date",
+      headerName: "Contract End Date",
+      field: "contract.endDate",
+      filter: "agTextColumnFilter",
+      minWidth: 120,
+      cellRenderer: sesCell,
+    },
+    {
+      headerName: "SES End Date",
       field: "sesEndDate",
       filter: "agTextColumnFilter",
       minWidth: 120,
@@ -144,6 +154,51 @@ const CoffTable = () => {
       e.api.refreshCells();
     },
   };
+
+  const toggleColumn = (columnName,value) =>{
+    gridColumnApi.setColumnVisible(columnName,value)
+  }
+  const headerToggle =  <div className='flex mt-2 gap-x-4 justify-center h-[30px]'>
+  <div className='flex items-center justify-center gap-x-2'>
+   <input type="checkbox" id='sectionCode' name='contract.sectionCode' onChange={(e)=>{toggleColumn(e.target.name,e.target.checked)}} defaultChecked className="checkbox checkbox-sm checkbox-primary" />
+   <label htmlFor="sectionCode">Section</label>
+   </div>
+   <div className='flex items-center justify-center gap-x-2'>
+   <input type="checkbox" id='contractNo' name='contractNo' onChange={(e)=>{toggleColumn(e.target.name,e.target.checked)}} defaultChecked className="checkbox checkbox-sm checkbox-primary" />
+   <label htmlFor="contractNo">Contract No.</label>
+   </div>
+   {/* <div className='flex items-center justify-center gap-x-2'>
+   <input type="checkbox" id='contractNo' name='contractNo' onChange={(e)=>{toggleColumn(e.target.name,e.target.checked)}} defaultChecked className="checkbox checkbox-sm checkbox-primary" />
+   <label htmlFor="contractNo">Contract No.</label>
+   </div> */}
+   <div className='flex items-center justify-center gap-x-2'>
+   <input type="checkbox" id='vendorName' name='contract.vendorName' onChange={(e)=>{toggleColumn(e.target.name,e.target.checked)}} defaultChecked className="checkbox checkbox-sm checkbox-primary" />
+   <label htmlFor="vendorName">Vendor Name</label>
+   </div>
+   <div className='flex items-center justify-center gap-x-2'>
+   <input type="checkbox" id='startDate' name='startDate' onChange={(e)=>{toggleColumn(e.target.name,e.target.checked)}} defaultChecked className="checkbox checkbox-sm checkbox-primary" />
+   <label htmlFor="startDate">Start Date</label>
+   </div>
+   <div className='flex items-center justify-center gap-x-2'>
+   <input type="checkbox" id='endDate' name='endDate' onChange={(e)=>{toggleColumn(e.target.name,e.target.checked)}} defaultChecked className="checkbox checkbox-sm checkbox-primary" />
+   <label htmlFor="endDate">End Date</label>
+   </div>
+   <div className='flex items-center justify-center gap-x-2'>
+   <input type="checkbox" id='sesEndDate' name='sesEndDate' onChange={(e)=>{toggleColumn(e.target.name,e.target.checked)}} defaultChecked className="checkbox checkbox-sm checkbox-primary" />
+   <label htmlFor="sesEndDate">SES End Date</label>
+   </div>
+   <div className='flex items-center justify-center gap-x-2'>
+   <input type="checkbox" id='contractEndDate' name='contract.endDate' onChange={(e)=>{toggleColumn(e.target.name,e.target.checked)}} defaultChecked className="checkbox checkbox-sm checkbox-primary" />
+   <label htmlFor="contractEndDate">Contract End Date</label>
+   </div>
+   
+   <div className='flex items-center justify-center gap-x-2'>
+   <input type="checkbox" id='amountToBeDelivered' name='amountToBeDelivered' onChange={(e)=>{toggleColumn(e.target.name,e.target.checked)}} defaultChecked className="checkbox checkbox-sm checkbox-primary" />
+   <label htmlFor="amountToBeDelivered">Remaining Value</label>
+   </div>
+  
+  </div>
+
 
   return (
     <div className="w-full mr-4">
@@ -227,12 +282,13 @@ const CoffTable = () => {
           </button>
         </div>
       </div>
-
+          {headerToggle}
       <div
-        className="ag-theme-quartz w-full h-[calc(100vh-125px)] min-h-[400px]" // applying the grid theme
+        className="ag-theme-quartz w-full h-[calc(100vh-155px)] min-h-[400px]" // applying the grid theme
         // the grid will fill the size of the parent container
       >
         <AgGridReact
+         onGridReady={onGridReady}
           rowData={data}
           gridOptions={gridOptions}
           columnDefs={colDefs}

@@ -4,6 +4,7 @@ import { ModalDataContext } from "../../context/ModalDataContext";
 import { convertDateMMMFormat } from "../../hooks/date.hook";
 import DeleteReqButton from "../buttons/DeleteReqButton";
 import { formatToCurrency } from "../../hooks/formatToCurrency.hook";
+import { copyText } from "../../hooks/copyText.hook";
 
 const RequisitionPageModal = () => {
   const { modalData: data } = useContext(ModalDataContext);
@@ -17,10 +18,11 @@ const RequisitionPageModal = () => {
       <div className="mt-4 ">
               <div className="flex  justify-around">
         <div className="join flex items-center justify-center mb-4 font-bold  text-center">
-          <div className="p-2 bg-primary text-primary-content w-[150px] join-item">
+          <div className="p-2 bg-primary text-primary-content w-[150px] join-item"
+         >
             Requisition No.
           </div>
-          <div className="p-2 join-item bg-base-300 w-[130px] ">{data.reqNo}</div>
+          <div className="p-2 join-item bg-base-300 w-[130px] cursor-copy hover:underline"  onClick={() =>  copyText(data.reqNo)}>{data.reqNo}</div>
         </div>
         <div className="join  flex items-center justify-center mb-4 font-bold  text-center">
           <div className="p-2 bg-primary text-primary-content w-[100px] join-item">

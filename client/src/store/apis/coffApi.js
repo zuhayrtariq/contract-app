@@ -58,9 +58,8 @@ const coffApi = createApi({
             invalidatesTags: ['Call-offs'],
             query: (coffNo) =>{
                 return{
-                    url: '/delete',
-                    body: {coffNo},
-                    method: 'POST',
+                    url: `/${coffNo}`,
+                    method: 'DELETE',
                 }
             } 
         })

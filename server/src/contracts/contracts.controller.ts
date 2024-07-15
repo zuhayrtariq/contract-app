@@ -45,7 +45,6 @@ export class ContractsController {
     @Get(':contractNo')
     getOne(@Param('contractNo') contractNo : number, @Query('withCoff') withCoff?: boolean, @Query('coffArchived') coffArchived?: boolean)
     {
-        console.log("This is WithCoff",withCoff)
         return this.contractsService.getOne(contractNo,withCoff,coffArchived)
     }
     @Get()

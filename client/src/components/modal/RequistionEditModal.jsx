@@ -4,7 +4,7 @@ import { FaPlus, FaTrashCan } from "react-icons/fa6";
 import toast, { Toaster } from "react-hot-toast";
 import { ModalDataContext } from "../../context/ModalDataContext";
 import { convertDateDotFormat, convertDateToISOFormat } from "../../hooks/date.hook";
-
+ 
 const RequisitionEditModal = () => {
   const { modalData,setModalName } = useContext(ModalDataContext);
  
@@ -23,6 +23,8 @@ const RequisitionEditModal = () => {
       reqType: modalData.reqType,
       reqDate: convertDateDotFormat(modalData.reqDate,'YYYY-MM-DD'),
       notes: modalData.notes,
+      emailAlerts : modalData.emailAlerts,
+      archived : modalData.archived,
     });
     setLoaded(true);
   }, [modalData]);
@@ -298,6 +300,28 @@ const RequisitionEditModal = () => {
             placeholder="Optional"
           />
         </label>
+
+        <div className="flex gap-x-8 justify-end">
+        <label className=" flex items-center gap-2 mt-4">
+            <span>Email Alerts</span>
+        <input type="checkbox" className="toggle toggle-success"  defaultChecked={data.emailAlerts}
+           onClick={(e) => {
+            onValueChange("emailAlerts", e.target.checked);
+          }}
+        />
+        </label>
+
+        <label className=" flex items-center gap-2 mt-4">
+            <span>Archived</span>
+        <input type="checkbox" className="toggle toggle-success"  defaultChecked={data.archived}
+           onClick={(e) => {
+            onValueChange("archived", e.target.checked);
+          }}
+        />
+        </label>
+
+        </div>
+
         <div className="w-full mt-4 flex justify-end ">
           {valuesChanged?.length ? (
             <button className="btn btn-primary text-primary-content font-bold uppercase">

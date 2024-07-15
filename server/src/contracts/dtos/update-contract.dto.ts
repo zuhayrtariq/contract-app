@@ -19,10 +19,9 @@ export class UpdateContractDto
     @IsOptional()
     notes? : string
 
-    @IsOptional()
     @IsNumber()
-    @IsPositive()
-    reqNo ?: number;
+    @IsOptional()
+    reqNo?: number | null;
 
     @IsOptional()
     @IsNumber()
